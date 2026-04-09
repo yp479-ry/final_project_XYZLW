@@ -43,13 +43,6 @@ Machine Learning Pipeline: Our pipeline includes data collection, exploratory da
 
 Impact: The objective of this study is to assist users in making flight travel decisions by providing them with predictive analysis, enabling them to gain a deeper understanding of flight delays. This will help users better identify the causes of delays, allowing them to choose more reliable travel options and optimize their travel plans. Although this study will provide users with insights into the causes of delays in specific regions, due to the large number of large airports, data bias may affect the accuracy of the model, and thus the results may not be applicable to the entire range of airport codes. Therefore, we will provide users with probability prediction estimates and simultaneously show them the uncertainty and its influencing factors.
 
-
-\begin{figure}[t]
-\centerline{\includegraphics[width=0.4\textwidth]{Figures/robot_figure.png}}
-\caption{Add caption here and include reference in the paper.}
-\label{fig:label_name1}
-\end{figure}
-
 %%%%%
 % Section 2: Related Work
 %%%%%
@@ -60,13 +53,6 @@ Review prior work relevant to your project and provide a brief background, discu
 %%%%%
 % Section 3: Method
 %%%%%
-\section{End-to-End ML Pipeline}
-
-\begin{figure}[t]
-\centerline{\includegraphics[width=0.5\textwidth]{Figures/study_overview_figure.png}}
-\caption{Add caption here and include reference in the paper.}
-\label{fig:label_name1}
-\end{figure}
 
 \subsection{Back-End}
 
@@ -74,10 +60,41 @@ The Back-End of the web application performs data exploration and preprocessing,
 
 \subsubsection{Data Collection, Exploration \& Processing} 
 
-Describe the dataset(s) you plan to use for training machine learning models including the type of data provided, quantity of data, year it was released (if available), source of the dataset (e.g., Kaggle), and how you plan to use it in the project. State whether ground truth labels are provided. If there are none, state how you plan to generate annotations or provide justification for the planned evaluation procedure. At least one dataset is required.
+We use the 2025 BTS Airline On-Time Performance dataset obtained from the official U.S. Bureau of Transportation Statistics (BTS) TranStats Airline On-Time Performance Reporting download portal. This is an official U.S. government data source that provides public flight performance records, making it an appropriate and reliable dataset for our project. After merging the 12 monthly files for 2025, the dataset contains 6,390,044 rows and 23 columns, which provides broad coverage across airlines, origins, destinations, and dates. It is a structured tabular dataset with mixed data types. It includes temporal features (YEAR, QUARTER, MONTH, FL\_DATE), categorical features (OP\_UNIQUE\_CARRIER, ORIGIN, ORIGIN\_CITY\_NAME, ORIGIN\_STATE\_NM, DEST, DEST\_CITY\_NAME, DEST\_STATE\_NM), numerical features (DEP\_DELAY, DEP\_DELAY\_NEW, AIR\_TIME, DISTANCE, CARRIER\_DELAY, WEATHER\_DELAY, NAS\_DELAY, SECURITY\_DELAY, LATE\_AIRCRAFT\_DELAY, etc.), and a binary target-related variable (DEP\_DEL15). In total, the merged dataset has 11 float columns, 4 integer columns, and 8 object columns. We will use this dataset to build a model to investigate whether it is possible to predict flight delays in the United States based on weather, airline, departure or arrival cities, and operational factors. We will also use this to create a system that helps users choose more reliable airlines when traveling. The dataset already includes ground truth labels. We will use DEP\_DEL15 as the classification label and DEP\_DELAY\_NEW as the regression label.
 
-State the preprocessing techniques used to prepare the dataset for ML algorithms. Provide justification for these techniques and how they are used in the next steps of the ML pipeline.
+We conducted an analysis of the types and causes of delays across various airlines. First, we analyzed the cleaned dataset, which contains only flights with complete data, and calculated the average forward departure delay time (DEP\_DELAY\_NEW) and the percentage of flights delayed by 15 minutes or more (DEP\_DEL15) for each airline. As shown in Figure 1, our calculations reveal significant differences among airlines. The average forward departure delay ranges from approximately 44.82 to 85.48 minutes, with OH, F9, G4, AA, and OO exhibiting higher values, whereas AS, HA, MQ, and WN show relatively lower values. Meanwhile, the proportion of flights delayed by 15 minutes or more ranges from approximately 69.92 percentage to 85.97 percentage, with WN, G4, OH, NK, and AA having higher rates, while AS, YX, UA, and HA have relatively lower rates. Based on these statistics, we have created a bar chart showing the average delay time per flight by airline (Figure 2) and a bar chart showing the proportion of delayed flights by airline (Figure 3).
 
+\begin{figure*}[t]
+\centering
+\includegraphics[width=0.95\textwidth]{Figures/airline_performance_metrics_table.png}
+\caption{Airline-Level Delay Metrics and Delay Cause Statistics in the Cleaned Delayed-Flight Subset.}
+\label{fig:airline_delay_table}
+\end{figure*}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\linewidth]{Figures/avg_delay_by_airline.png}
+\caption{Average positive departure delay per delayed flight by airline in the cleaned delayed-flight subset.}
+\label{fig:avg_delay_by_airline}
+\end{figure}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\linewidth]{Figures/delay_ratio_by_airline.png}
+\caption{Proportion of flights with departure delays of 15 minutes or more by airline in the cleaned delayed-flight subset.}
+\label{fig:delay_ratio_by_airline}
+\end{figure}
+
+We also generated correlation heatmaps for five different causes of delays. Based on the heatmaps (Figure 4), we found that most types of delays are positively correlated with one another. In particular, delays caused by airline operational issues are closely correlated with weather-related delays, and airline system delays are also closely correlated with delays caused by late-arriving aircraft. In contrast, security check delays show weaker correlations with most other types of delays. This suggests that several operational delay causes often co-occur and should be considered together in later analysis.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=\linewidth]{Figures/delay_type_correlation_heatmap.png}
+\caption{Correlation heatmap of the five BTS delay-cause variables in the cleaned delayed-flight subset.}
+\label{fig:delay_type_correlation}
+\end{figure}
+
+During the preprocessing stage, we first merged the 12 monthly CSV files into a single dataset and examined the overall structure, column types, missing values, and descriptive statistics. We then removed rows with missing values from the key delay-related columns and performed data cleaning. Specifically, if any of the variables DEP\_DELAY, DEP\_DELAY\_NEW, DEP\_DEL15, CARRIER\_DELAY, WEATHER\_DELAY, NAS\_DELAY, SECURITY\_DELAY, or LATE\_AIRCRAFT\_DELAY contained NAN values, we excluded the entire column of data. This is because the primary research question of our project is: Can we use weather, airline, departure/arrival cities, and operational factors to predict whether U.S. flights will be delayed? Therefore, we only need to retain data related to these factors and do not need to retain information on flights that departed on time or ahead of schedule. Since our delay data contains negative values (early departures), we truncated these negative values to 0 to ensure that the delay measurements are valid non-negative values. We also created variables for each airline, including delay rate, average delay time per flight, total delay time, and the percentage of delayed flights, to understand the relationship between airlines and delays. This provides valuable insights for the subsequent research in our project. Moreover, we also categorized the continuous variable “DISTANCE” into short-haul and long-haul flights. Flights with a distance of 500 miles or less were classified as short-haul, while those with a distance greater than 1,500 miles were classified as long-haul.
 
 \subsubsection{Methods and Model Training} 
 
