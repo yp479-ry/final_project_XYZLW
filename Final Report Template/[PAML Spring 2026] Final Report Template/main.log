@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.3.8)  7 APR 2026 21:34
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.3.8)  8 APR 2026 23:08
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -233,7 +233,8 @@ Package xcolor Info: Model `wave' substituted by `hsb' on input line 1372.
 File: l3backend-pdftex.def 2024-05-08 L3 backend support: PDF output (pdfTeX)
 \l__color_backend_stack_int=\count293
 \l__pdf_internal_box=\box56
-) (./main.aux)
+)
+No file main.aux.
 \openout1 = `main.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 12.
@@ -250,7 +251,6 @@ LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 12.
 LaTeX Font Info:    ... okay on input line 12.
 LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 12.
 LaTeX Font Info:    ... okay on input line 12.
-
 -- Lines per column: 56 (exact).
 (/usr/local/texlive/2025/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
@@ -271,41 +271,39 @@ Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 48
  (/usr/local/texlive/2025/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Live
 ))
-LaTeX Font Info:    Trying to load font information for U+msa on input line 57.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 49.
  (/usr/local/texlive/2025/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 57.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 49.
  (/usr/local/texlive/2025/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-LaTeX Font Info:    Calculating math sizes for size <11> on input line 57.
+LaTeX Font Info:    Calculating math sizes for size <11> on input line 49.
  (./final_report_body.tex
-<Figures/robot_figure.png, id=1, 100.2144pt x 100.2144pt>
-File: Figures/robot_figure.png Graphic file (type png)
-<use Figures/robot_figure.png>
-Package pdftex.def Info: Figures/robot_figure.png  used on input line 48.
-(pdftex.def)             Requested size: 206.39685pt x 206.41948pt.
-
-
-LaTeX Warning: Citation `example_bibtex_label' on page 1 undefined on input line 58.
-
-
-
-<Figures/study_overview_figure.png, id=2, 873.2625pt x 296.10625pt>
-File: Figures/study_overview_figure.png Graphic file (type png)
-<use Figures/study_overview_figure.png>
-Package pdftex.def Info: Figures/study_overview_figure.png  used on input line 66.
-(pdftex.def)             Requested size: 258.0pt x 87.4816pt.
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
 
 
 
 [1{/usr/local/texlive/2025/texmf-var/fonts/map/pdftex/updmap/pdftex.map}{/usr/local/texlive/2025/texmf-dist/fonts/enc/dvips/base/8r.enc}
 
 
- <./Figures/robot_figure.png> <./Figures/study_overview_figure.png>]
+]
+<Figures/robot_figure.png, id=10, 100.2144pt x 100.2144pt>
+File: Figures/robot_figure.png Graphic file (type png)
+<use Figures/robot_figure.png>
+Package pdftex.def Info: Figures/robot_figure.png  used on input line 48.
+(pdftex.def)             Requested size: 206.39685pt x 206.41948pt.
+
+
+LaTeX Warning: Citation `example_bibtex_label' on page 2 undefined on input line 58.
+
+<Figures/study_overview_figure.png, id=11, 873.2625pt x 296.10625pt>
+File: Figures/study_overview_figure.png Graphic file (type png)
+<use Figures/study_overview_figure.png>
+Package pdftex.def Info: Figures/study_overview_figure.png  used on input line 66.
+(pdftex.def)             Requested size: 258.0pt x 87.4816pt.
+
+
 ./final_report_body.tex:77: Misplaced alignment tab character &.
 \@svsechd ...@svsec Data Collection, Exploration &
                                                    Processing\@IEEEsectpunct...
@@ -319,6 +317,8 @@ you're probably due for more error messages, and you
 might try typing `S' now just to see what is salvageable.
 
 
+
+[2 <./Figures/robot_figure.png> <./Figures/study_overview_figure.png>]
 
 )
 
@@ -334,7 +334,7 @@ Before submitting the final camera ready copy, remember to:
 
 
 
-[2] (./main.aux)
+[3] (./main.aux)
  ***********
 LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2025-01-18>
@@ -348,18 +348,18 @@ LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
 
  ) 
 Here is how much of TeX's memory you used:
- 4208 strings out of 473190
- 66351 string characters out of 5715801
- 471766 words of memory out of 5000000
- 27422 multiletter control sequences out of 15000+600000
+ 4205 strings out of 473190
+ 66312 string characters out of 5715801
+ 475775 words of memory out of 5000000
+ 27421 multiletter control sequences out of 15000+600000
  599061 words of font info for 116 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 57i,11n,65p,644b,304s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 57i,11n,65p,1495b,304s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/local/texlive/2025/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/urw/times/utmbi8a.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on main.pdf (2 pages, 163958 bytes).
+Output written on main.pdf (3 pages, 171190 bytes).
 PDF statistics:
- 36 PDF objects out of 1000 (max. 8388607)
- 20 compressed objects within 1 object stream
+ 39 PDF objects out of 1000 (max. 8388607)
+ 22 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  11 words of extra memory for PDF output out of 10000 (max. 10000000)
 

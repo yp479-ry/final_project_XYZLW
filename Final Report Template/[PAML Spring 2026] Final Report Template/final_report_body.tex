@@ -32,16 +32,16 @@ component, formatting, style, styling, insert
 %%%%%
 \section{Introduction}
 
-Motivation: What problem are you tackling? Why is it interesting/important? What application will you develop and why is it useful? 
+Motivation: 
+The problem of flight delays in the U.S. continues to exist. Flight delays impact many passengers every year and negatively impact them in many different ways, including causing passengers to miss connecting flights, causing higher costs, making it harder to achieve reliable travel, etc. Currently, there are very few tools that provide predictive information on flight delays; most only provide a historical record of what the airline has done previously or update the passenger with real-time information. The other issue is that passengers generally are not familiar with why certain flights are delayed and rarely know what to do to obtain a better travel option. In light of this issue, we propose an application using machine learning to allow the passenger to enter their departing airport, arriving airport, and date of travel and receive a prediction of both the probability of flight delay and the predicted duration of the flight delay based on the individual airline being used for the flight. In addition, users would also receive an airline recommendation based on the risk of flying with that airline so that they can make better travel choices.
 
-Technical focus: What type of machine learning methods are used in the proposed approach and why is it well suited to address the problem. What is particularly unique or novel about your approach? 
+Technical focus: We define this problem as a classification task (predicting whether a flight will be delayed) and a regression task (predicting the duration of the delay). To capture the complex relationships among numerous factors such as weather, airline operations, and airport congestion, we employed a combination of baseline models and ensemble models, including logistic regression and forest models. One of the key contributions of our approach lies in the use of five structured delay categories from the BTS dataset - airline, weather, national aviation system, security check, and delayed aircraft delay - as core features. This not only enables us to predict the delay situation but also explains the underlying causes and provides users with more meaningful suggestions.
 
-Prior Work: Discuss prior work relevant to the proposed work. How is prior work different and similar to the proposed work?
+Prior Work: Delay prediction through previous research has mainly used machine learning or statistical analysis to analyse numerous delays based upon past events to develop delay patterns. This research attempts to find the most significant factors contributing to delays as well as improve delay prediction accuracy. However, almost all other delay prediction research used single outcome variables for delay prediction purposes and did not define a method to classify the cause of each delay) and did not provide an avenue for extending research efforts into user-friendly applications. Therefore, our research will be different in that we define multiple delay type classifications, and bring together delay prediction with a user-friendly decision-support system to aid in decision making.
 
-Machine Learning Pipeline: Provide a brief overview of your proposed machine learning pipeline including data exploration, preprocessing, model training and evaluation (including expected results) and deployment of the model in an application. 
+Machine Learning Pipeline: Our pipeline includes data collection, exploratory data analysis (EDA), preprocessing, model training, model evaluation, and deployment. We worked with 2025 Bureau of Transportation Statistics (BTS) flight data to get information on the airline and route, and delay features to include in our models. The delay features we used included features from carrier delays, weather delays, NAS delays, security delays, and late aircraft delays. We also used EDA to examine the delay distributions for routes, airlines, and regions to find patterns related to the delays for each type. After identifying the missing values in the data and encoding the categorical variables, we built classification and regression algorithms to predict the likelihood of or length of a delay, with the training/testing split giving us an accurate assessment of the models. The performance of the model was evaluated with accuracy, precision, recall, F1 score, and RMSE. Once the best-performing model was identified, it was deployed through a Streamlit application that allows the user to input the desired route and date, and to subsequently receive the likelihood of the delay occurring, which is based on the route and date the user provided, along with any other likely contributing factors to the delay.
 
-Impact: Discussion of social impacts and ethical concerns the application might raise.
-
+Impact: The objective of this study is to assist users in making flight travel decisions by providing them with predictive analysis, enabling them to gain a deeper understanding of flight delays. This will help users better identify the causes of delays, allowing them to choose more reliable travel options and optimize their travel plans. Although this study will provide users with insights into the causes of delays in specific regions, due to the large number of large airports, data bias may affect the accuracy of the model, and thus the results may not be applicable to the entire range of airport codes. Therefore, we will provide users with probability prediction estimates and simultaneously show them the uncertainty and its influencing factors.
 
 
 \begin{figure}[t]
@@ -108,24 +108,22 @@ Provide figures to depict the proposed website layout and provide detailed discu
 
 \section{Risk \& Mitigation}
 
-Identify challenges you are anticipating, and how you are planning to mitigate them e.g., programming, model training, and evaluation. 
+The disparity in categories of flight delays presents a substantial barrier to establishing a model of flight delays due to the unequal distribution (approximately half of delays are concentrated into two categories). Additionally, larger airports are likely to provide much more flight delay data than smaller ones would, thereby causing bias and skewness in the results produced by the flight delay model being developed. In order to alleviate the effects of such bias and skewness in regard to the model developed from the data provided by airports of varying size, we carry out an exploratory data analysis, give consideration to normalizing the features associated with the delay data, and evaluate the model’s performance by way of an assessment of performance over various routes and types of airports. Modelling the complex, nonlinear interactions between factors that produce flight delays is another challenge; factors creating delay include, for example, weather conditions and operational constraints. We have employed both baseline and ensemble type models with the hope of more thoroughly capturing the interaction among the various factors affecting delay, and we have compared the performance of the two types of models based upon multiple evaluation metrics in order to promote stability in our model results.
+
 
 \section{Expected Outcomes }
 
-State the expected outcomes of the project based on prior work or a high-level inspiration or motivation.
+Based on previous research findings and the characteristics of the BTS data set, ensemble models are expected to provide better predictions of the probability and duration of delays than baseline models. In addition, based on the analysis performed to date, it is anticipated that there will be only a few key factors contributing to overall delay patterns, these factors are likely to include late aircraft delays and carrier delays while climate-based delays may fluctuate more by geographic location and season. Moreover, the results of prediction analyses and delay factor analyses should provide valuable airline selection recommendations to users through the application's ability to identify the least risky travel options. Overall, this project seeks to demonstrate that integrating predictive modelling with interpretable delay factors improves the accuracy of the predictions, as well as the usefulness of the resulting decision support.
 
 \section{Team Member Contribution}
 
-
-Each team member is expected to contribute to the final project. Task responsibilities must be clearly stated in terms of front- and back-end development.
-
+Each team member contributes to both the technical and writing components of the project, with clearly defined responsibilities across front-end and back-end development.
 
 \subsection{Technical Components}
 
-Include the team contributions in terms of technical goals of the project such as programming front- and back-end components and algorithms. 
+Yufan Peng is responsible for data collection, model development, and model evaluation. Zhiying Huo focuses on exploratory data analysis (EDA) and back-end implementation. Xinrui Song contributes to model development and evaluation. Lin Wu is responsible for front-end development and supports exploratory analysis. Xinyi Huang focuses on literature review, exploratory data analysis, and model evaluation. This distribution ensures a balanced workflow across data processing, modeling, evaluation, and application development.
 
 \subsection{Writing Components}
 
-Include the team contributions for writing sections of the final report for all sections. 
-
+Yufan Peng is responsible for drafting the Introduction and Machine Learning Pipeline sections. Zhiying Huo contributes to the Data and Preprocessing description within the pipeline section. Xinrui Song focuses on the Model Training and Evaluation sections. Lin Wu is responsible for the Front-End (Streamlit application) description. Xinyi Huang contributes to the Background section and supports the Risk \& Mitigation and Expected Outcomes sections. All team members collaboratively review and revise the final report to ensure clarity, consistency, and completeness.
 

@@ -1,6 +1,6 @@
 # Fdb version 4
-["pdflatex"] 1775612042.85855 "/Users/macbookpro/Desktop/final_project_XYZLW/Final Report Template/[PAML Spring 2026] Final Report Template/main.tex" "main.pdf" "main" 1775612043.41406 2
-  "/Users/macbookpro/Desktop/final_project_XYZLW/Final Report Template/[PAML Spring 2026] Final Report Template/main.tex" 1775611438.59546 2027 67e5fbd34966623f12e31b7f4acea49c ""
+["pdflatex"] 1775704102.11401 "/Users/macbookpro/Desktop/final_project_XYZLW/Final Report Template/[PAML Spring 2026] Final Report Template/main.tex" "main.pdf" "main" 1775704102.67995 2
+  "/Users/macbookpro/Desktop/final_project_XYZLW/Final Report Template/[PAML Spring 2026] Final Report Template/main.tex" 1775699216.11719 1659 75bd6861badd8cabbc49e75803d77ed8 ""
   "/usr/local/texlive/2025/texmf-dist/fonts/enc/dvips/base/8r.enc" 1165713224 4850 80dc9bab7f31fb78a000ccfed0e27cab ""
   "/usr/local/texlive/2025/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/local/texlive/2025/texmf-dist/fonts/tfm/adobe/times/ptmb7t.tfm" 1136768653 2172 fd0c924230362ff848a33632ed45dc23 ""
@@ -73,9 +73,9 @@
   "/usr/local/texlive/2025/texmf.cnf" 1741450484 577 418a7058ec8e006d8704f60ecd22c938 ""
   "Figures/robot_figure.png" 1775611438.58719 37977 2feb282d334dcf2097a38178d085b445 ""
   "Figures/study_overview_figure.png" 1775611438.58978 115793 563b468c857d3240fd07924d8410f2ea ""
-  "final_report_body.tex" 1775611438.59372 6974 217c1cbfd513a84dffc65e3590e72929 ""
-  "main.aux" 1775612043.37916 2121 e2f3660ea6f810eb9b8bf7d1d39fe361 "pdflatex"
-  "main.tex" 1775611438.59546 2027 67e5fbd34966623f12e31b7f4acea49c ""
+  "final_report_body.tex" 1775704101.21369 13924 1f705343fdb556f139cd24d8c381e78b ""
+  "main.aux" 1775704102.64583 2121 e14b4ea9c431a2533aa004ebdf5d6d3e "pdflatex"
+  "main.tex" 1775699216.11719 1659 75bd6861badd8cabbc49e75803d77ed8 ""
   (generated)
   "main.aux"
   "main.log"
