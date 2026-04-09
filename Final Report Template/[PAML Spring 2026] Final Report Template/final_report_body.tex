@@ -101,9 +101,94 @@ Describe the application of proposed project including user inputs and model out
 
 \subsection{Front-End (Streamlit)}
 
-The Front-End of the web application includes that user interface (UI) layout, user inputs using menus, buttons, and more. Describe the web application layout including the number of pages, outline of page, menus, input widgets, chart elements, etc.
+The front-end of the proposed web application is developed using the Streamlit framework, which enables rapid integration of machine learning models with an interactive and user-friendly interface. The goal of the application is to translate predictive modeling results into actionable insights that assist users in making better travel decisions.
 
-Provide figures to depict the proposed website layout and provide detailed discussion on how the front- and back-end are connected (e.g., training a model by pressing a button). Feel free to be creative and design a clear, concise, and well presented application.
+\subsubsection{Target Population}
+
+The primary target users of this application are travelers within the United States, including business travelers, students, and tourists, who seek to reduce the risk of flight delays. These users typically do not have a technical background in machine learning; therefore, the application is designed to be intuitive, requiring minimal input while providing clear and interpretable outputs.
+
+\subsubsection{User Interface Layout}
+
+The web application is structured into two main sections: an input interface and a results dashboard.
+
+The input interface (home page) allows users to specify flight details, including departure airport, arrival airport, and travel date. The design follows a clean and minimal layout to reduce cognitive load and ensure ease of use.
+
+\begin{figure}[t]
+\centerline{\includegraphics[width=0.45\textwidth]{Figures/frontend_home.png}}
+\caption{Home page input interface of the Streamlit application.}
+\label{fig:frontend_home}
+\end{figure}
+
+Once the user submits the input, the application transitions to a results dashboard that presents model predictions and insights in a structured format. The dashboard includes the following components:
+
+\begin{itemize}
+    \item \textbf{Recommended Airline Panel:} Highlights the airline with the lowest predicted delay risk, along with delay probability, expected delay duration, and a reliability score.
+    \item \textbf{Airline Comparison Table:} Displays multiple airlines with their corresponding delay probability, expected delay time, and reliability ratings, enabling direct comparison.
+    \item \textbf{Delay Comparison Visualization:} A bar chart comparing delay probability and expected delay duration across airlines.
+    \item \textbf{Delay Causes Breakdown:} A donut chart illustrating the contribution of different delay factors, including carrier, weather, NAS, security, and late aircraft delays.
+\end{itemize}
+
+\begin{figure}[t]
+\centerline{\includegraphics[width=0.45\textwidth]{Figures/frontend_results.png}}
+\caption{Results dashboard displaying prediction outputs and airline recommendations.}
+\label{fig:frontend_results}
+\end{figure}
+
+\begin{figure}[t]
+\centerline{\includegraphics[width=0.45\textwidth]{Figures/frontend_airline_comparison.png}}
+\caption{Airline comparison table with delay probability and reliability ratings.}
+\label{fig:frontend_airline_comparison}
+\end{figure}
+
+This layout ensures that users can quickly interpret results and make informed decisions.
+
+\subsubsection{User Inputs and Outputs}
+
+The application utilizes simple and structured input components:
+
+\begin{itemize}
+    \item Dropdown menus for selecting departure and arrival airports
+    \item A date picker for selecting the travel date
+    \item A button labeled \textit{``Predict \& Compare Flights''} to trigger model execution
+\end{itemize}
+
+After the user submits the inputs, the application generates the following outputs:
+
+\begin{itemize}
+    \item Predicted probability of flight delay (classification output)
+    \item Predicted delay duration in minutes (regression output)
+    \item A ranked comparison of airlines based on delay risk
+    \item A recommended airline based on combined prediction metrics
+    \item An explanation of delay causes using feature importance
+\end{itemize}
+
+These outputs are presented visually and textually to enhance interpretability and usability.
+
+\subsubsection{Front-End and Back-End Integration}
+
+The Streamlit application integrates the front-end interface with the machine learning pipeline in a seamless manner. When the user clicks the prediction button, the selected inputs are passed to the backend model pipeline.
+
+The backend consists of both a baseline Logistic Regression model and a primary Random Forest model. The Random Forest model is used to generate the final predictions, including delay probability and expected delay duration. Additionally, feature importance scores derived from the model are used to explain the contributing factors behind flight delays.
+
+Once the model inference is complete, Streamlit dynamically updates the interface to display the results in the form of tables, charts, and recommendation panels, as shown in Figures~\ref{fig:frontend_delay_chart} and~\ref{fig:frontend_delay_causes}. A loading indicator can be incorporated to inform users that the model is processing their request, improving the overall user experience.
+
+\begin{figure}[t]
+\centerline{\includegraphics[width=0.45\textwidth]{Figures/frontend_delay_chart.png}}
+\caption{Bar chart comparing delay probability and expected delay duration across airlines.}
+\label{fig:frontend_delay_chart}
+\end{figure}
+
+\begin{figure}[t]
+\centerline{\includegraphics[width=0.45\textwidth]{Figures/frontend_delay_causes.png}}
+\caption{Donut chart illustrating the breakdown of delay causes by contributing factor.}
+\label{fig:frontend_delay_causes}
+\end{figure}
+
+\subsubsection{Application Design Considerations}
+
+The application is designed to be clear, concise, and actionable. It minimizes user input requirements while maximizing the value of the output. By combining prediction, comparison, and explanation in a single interface, the system transforms raw historical data into meaningful decision support.
+
+Overall, the application demonstrates how machine learning models can be effectively deployed in a real-world scenario to improve user decision-making and enhance travel planning.
 
 
 \section{Risk \& Mitigation}
