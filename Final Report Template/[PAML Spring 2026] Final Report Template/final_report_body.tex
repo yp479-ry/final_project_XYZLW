@@ -7,24 +7,14 @@
 %%%%%%%%%%%%%%%%%%%%
 \begin{abstract}
 
-Provide a brief summary of: 
-What problem do you aim to address?
-Why is this problem an important application? 
-What is your proposed approach? 
-How does the proposed approach compare to prior work? 
-Describe what dataset used to train and evaluate the proposed machine learning models used and provide sources. 
-Describe the design of the front- and back-end of the application. 
-How will you evaluate the proposed machine learning models including metrics? 
-What are the expected findings?
-What impacts does this project have on the machine learning field broadly?
+Delays in air travel can lead to significant confusion for the passenger and create operational disruption for the airline. The purpose of this work is to investigate the delay of airline flights by analyzing historical airline flight data, using two types of machine learning techniques, classification (to predict if the flight will be delayed) and regression (to estimate the delay time). The training datasets used for both types of models are publicly accessible. Model comparison metrics used include accuracy, precision, recall, and mean square error.  
 
-
-
+In addition to model performance being important, this work will demonstrate the practicality of these types of models by providing an interactive interface (with Streamlit) to allow users to enter their own flight information into the system to receive real-time predictions and visual insights. Multi-variable models are expected to outperform their simple baseline counterparts but will also produce a better balance between the two aspects: i.e., for automated predicting, and for providing a better understanding of how the model works. Overall, this work demonstrates a use of machine learning to solve real-world transportation problems, while still being user-friendly and easily accessible to all users.
 
 \end{abstract}
 
 \begin{IEEEkeywords}
-component, formatting, style, styling, insert
+flight delay prediction, machine learning, classification, regression, streamlit, data analysis
 \end{IEEEkeywords}
 
 %%%%%
@@ -48,7 +38,11 @@ Impact: The objective of this study is to assist users in making flight travel d
 %%%%%
 \section{Background}
 
-Review prior work relevant to your project and provide a brief background, discuss how your proposed work is similar and different from prior work, and cite sources in bibtex. Google Scholar provides bibtex code. Place the bibtex code in the references.bib file in Overleaf and cite the source (e.g., \cite{example_bibtex_label}). Based on prior work and results, how do you anticipate your proposed approach will compare to prior approaches?
+Flight delay prediction has been widely studied using both statistical and machine learning methods. Early work commonly used regression and classification models to predict delays based on historical flight data \cite{tang2021airline}. More recent studies have improved prediction performance by applying advanced methods, such as ensemble models and neural networks, to capture more complex relationships in the data \cite{jiang2020aviation}. Prior research has also shown that flight delays are influenced by multiple factors, including airline operations, departure time, and weather conditions \cite{choi2016weather}.
+
+Recent literature further suggests that flight delays are not isolated events. Instead, delays can propagate across flights and through airport networks, which makes prediction more challenging \cite{chen2019chained, wu2019propagation}. Although these approaches often improve predictive accuracy, many of them rely on more complex models that are harder to interpret and apply in practice \cite{zoutendijk2021probabilistic}.
+
+Our proposed approach is similar to prior work in that it also uses historical flight data and machine learning to predict delays. However, our work differs from prior studies in two main ways. First, we focus on directly comparing both classification and regression methods within a simpler and more interpretable framework. Second, we emphasize usability by integrating the models into an interactive Streamlit application. Based on findings from prior work, we expect that our multi-variable models will outperform simple baselines, while offering a better balance between performance, interpretability, and ease of use than more complex approaches.
 
 %%%%%
 % Section 3: Method
@@ -229,3 +223,5 @@ Yufan Peng is responsible for data collection, model development, and model eval
 
 Yufan Peng is responsible for drafting the Introduction and Machine Learning Pipeline sections. Zhiying Huo contributes to the Data and Preprocessing description within the pipeline section. Xinrui Song focuses on the Model Training and Evaluation sections. Lin Wu is responsible for the Front-End (Streamlit application) description. Xinyi Huang contributes to the Background section and supports the Risk \& Mitigation and Expected Outcomes sections. All team members collaboratively review and revise the final report to ensure clarity, consistency, and completeness.
 
+\bibliographystyle{ieee_fullname}
+\bibliography{references}
