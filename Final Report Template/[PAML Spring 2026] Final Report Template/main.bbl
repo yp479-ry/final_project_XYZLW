@@ -1,0 +1,43 @@
+\begin{thebibliography}{1}\itemsep=-1pt
+
+\bibitem{chen2019chained}
+Jun Chen and Meng Li.
+\newblock Chained predictions of flight delay using machine learning.
+\newblock In {\em AIAA Scitech 2019 Forum}, 2019.
+
+\bibitem{choi2016weather}
+Sun Choi, Young~Jin Kim, Simon Briceno, and Dimitri Mavris.
+\newblock Prediction of weather-induced airline delays based on machine
+  learning algorithms.
+\newblock In {\em 2016 IEEE/AIAA 35th Digital Avionics Systems Conference
+  (DASC)}, 2016.
+
+\bibitem{jiang2020aviation}
+Yushan Jiang, Yongxin Liu, Dahai Liu, and Honghao Song.
+\newblock Applying machine learning to aviation big data for flight delay
+  prediction.
+\newblock In {\em 2020 IEEE 18th Intl Conf on Dependable, Autonomic and Secure
+  Computing, 18th Intl Conf on Pervasive Intelligence and Computing, 6th Intl
+  Conf on Cloud and Big Data Computing, and 5th Cyber Science and Technology
+  Congress}, 2020.
+
+\bibitem{tang2021airline}
+Yuemin Tang.
+\newblock Airline flight delay prediction using machine learning models.
+\newblock In {\em Proceedings of the 2021 5th International Conference on
+  E-Business and Internet}, 2021.
+
+\bibitem{wu2019propagation}
+Cheng-Lung Wu and Kristie Law.
+\newblock Modelling the delay propagation effects of multiple resource
+  connections in an airline network using a bayesian network model.
+\newblock {\em Transportation Research Part E: Logistics and Transportation
+  Review}, 122:62--77, 2019.
+
+\bibitem{zoutendijk2021probabilistic}
+Micha Zoutendijk and Mihaela~A. Mitici.
+\newblock Probabilistic flight delay predictions using machine learning and
+  applications to the flight-to-gate assignment problem.
+\newblock {\em Aerospace}, 8(6):152, 2021.
+
+\end{thebibliography}
