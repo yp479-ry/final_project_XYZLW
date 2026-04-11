@@ -27,7 +27,7 @@ The problem of flight delays in the U.S. continues to exist. Flight delays impac
 
 Technical focus: We define this problem as a classification task (predicting whether a flight will be delayed) and a regression task (predicting the duration of the delay). To capture the complex relationships among numerous factors such as weather, airline operations, and airport congestion, we employed a combination of baseline models and ensemble models, including logistic regression and forest models. One of the key contributions of our approach lies in the use of five structured delay categories from the BTS dataset - airline, weather, national aviation system, security check, and delayed aircraft delay - as core features. This not only enables us to predict the delay situation but also explains the underlying causes and provides users with more meaningful suggestions.
 
-Prior Work: Delay prediction through previous research has mainly used machine learning or statistical analysis to analyse numerous delays based upon past events to develop delay patterns. This research attempts to find the most significant factors contributing to delays as well as improve delay prediction accuracy. However, almost all other delay prediction research used single outcome variables for delay prediction purposes and did not define a method to classify the cause of each delay) and did not provide an avenue for extending research efforts into user-friendly applications. Therefore, our research will be different in that we define multiple delay type classifications, and bring together delay prediction with a user-friendly decision-support system to aid in decision making.
+Prior Work: Delay prediction through previous research has mainly used machine learning or statistical analysis to analyse numerous delays based upon past events to develop delay patterns. This research attempts to find the most significant factors contributing to delays as well as improve delay prediction accuracy. However, almost all other delay prediction research used single outcome variables for delay prediction purposes and did not define a method to classify the cause of each delay and did not provide an avenue for extending research efforts into user-friendly applications. Therefore, our research will be different in that we define multiple delay type classifications, and bring together delay prediction with a user-friendly decision-support system to aid in decision making.
 
 Machine Learning Pipeline: Our pipeline includes data collection, exploratory data analysis (EDA), preprocessing, model training, model evaluation, and deployment. We worked with 2025 Bureau of Transportation Statistics (BTS) flight data to get information on the airline and route, and delay features to include in our models. The delay features we used included features from carrier delays, weather delays, NAS delays, security delays, and late aircraft delays. We also used EDA to examine the delay distributions for routes, airlines, and regions to find patterns related to the delays for each type. After identifying the missing values in the data and encoding the categorical variables, we built classification and regression algorithms to predict the likelihood of or length of a delay, with the training/testing split giving us an accurate assessment of the models. The performance of the model was evaluated with accuracy, precision, recall, F1 score, and RMSE. Once the best-performing model was identified, it was deployed through a Streamlit application that allows the user to input the desired route and date, and to subsequently receive the likelihood of the delay occurring, which is based on the route and date the user provided, along with any other likely contributing factors to the delay.
 
@@ -92,23 +92,39 @@ During the preprocessing stage, we first merged the 12 monthly CSV files into a 
 
 \subsubsection{Methods and Model Training} 
 
-What machine learning techniques are you planning to apply or improve upon and how? Provide justification for why the machine learning approach is well-suited to address the problem. What are the model inputs and outputs? Describe the training and validation procedure including the train/test split. State model parameter settings and justification. Discuss the methods used to avoid model overfitting and underfitting. 
+To solve the problem of flight delay prediction, we apply both a baseline model and a more advanced model. We can compare performance and understand the trade-offs between simplicity and predictive power. We use Logistic Regression as a baseline model and Random Forest as the primary model.
 
-Make sure to describe them in detail and provide enough context for the reader to understand the methods at least at a high level. Provide any background that is necessary for that.
+\textbf{Logistic Regression} is used for the classification task of predicting whether a flight will be delayed. This model is simple and interpretable, so it is useful for understanding how different features, such as airline and delay-related factors, contribute to the probability of delay. It also provides a clear benchmark for evaluating more complex models.
 
+\textbf{Random Forest} is used as the main model for both classification and regression tasks. For classification, it predicts the probability that a flight will be delayed. For regression, it estimates the delay duration. Since Random Forest can capture nonlinear relationships and interactions between multiple features, such as weather conditions, airline operations, and route characteristics, so it is well suited for this problem. It is also more robust to noise in the data compared to simpler models.
+
+The input features for both models include airline information, route information, temporal variables such as month, and delay-related variables including carrier delay, weather delay, NAS delay, security delay, and late aircraft delay. The outputs are either a binary label indicating whether a delay occurs or a continuous value representing the delay duration in minutes.
+
+We split the dataset into training and testing sets with \textbf{80/20} split. During model training, we adjust parameters such as the number of trees and maximum depth for the Random Forest to improve performance. To reduce overfitting, we limit model complexity and evaluate performance on the test set rather than only on the training data. For Logistic Regression, regularization is applied to improve generalization and prevent the model from fitting noise in the data.
+
+Overall, using both a simple baseline model and a more advanced model allows us to compare interpretability and predictive performance, also to better understand how different factors contribute to flight delays.
 
 \subsubsection{Model Evaluation} 
 
-escribe the planned experiments, expected outcomes, and error analysis. State the evaluation methods for comparison (at least three required), metrics (at least two required), and hyperparameter settings. The evaluation methods consist of all methods used for comparison. The evaluation metrics assess how well the models perform and can be used to identify over- and underfitting. State whether the metrics used are commonly used for evaluating similar tasks and cite sources. 
+To evaluate model performance, we design experiments to compare both classification and regression results across different models. Our goal is to assess predictive accuracy as well as generalization to unseen data.
 
-Make sure that the setup is described in enough detail for someone else to reproduce your results. Also, if you have an experimental project, make sure to provide a detailed experimental analysis. Things you should consider including: train/test performance, learning curves, model samples, error analyses, ablation analyses, etc. 
+For the classification task, we use accuracy, precision, recall, and F1 score. Accuracy measures overall correctness, while precision and recall help evaluate how well the model identifies delayed flights. The F1 score provides a balanced measure when there is potential class imbalance.
 
-Context: Explain how you build upon previous work and how your expected results compare to what has been done previously (be realistic in your prediction).
+For the regression task, we use Root Mean Squared Error (RMSE) to measure how close the predicted delay duration is to the actual value. RMSE places greater emphasis on larger errors, making it suitable for delay prediction.
 
+We split the dataset into training and testing sets using an 80/20 split. All models are trained on the training set and evaluated on the test set to ensure reliable performance comparison. We compare Logistic Regression and Random Forest to understand the trade-off between interpretability and predictive power.
+
+To improve performance, we tune model parameters such as tree depth and number of trees in Random Forest, as well as regularization in Logistic Regression. We also monitor differences between training and test performance to reduce overfitting and ensure good generalization.
+
+Overall, this evaluation setup allows us to compare models effectively and select the most suitable one for deployment.
 
 \subsubsection{Model Deployment} 
 
-Describe the application of proposed project including user inputs and model outputs. Discuss the importance of the application as well as ethical or societal implications of its usage with everyday users.
+For deployment, we select the final model based on a trade-off between predictive performance and interpretability. While Random Forest is expected to achieve higher accuracy and better capture complex relationships in the data, Logistic Regression provides more interpretable results that help explain how different factors contribute to flight delays.
+
+We compare both models using the evaluation metrics described earlier and choose the model that provides the best overall performance on the test set. In cases where performance differences are small, we prioritize the model that offers better interpretability and more stable predictions.
+
+The selected model is then integrated into the Streamlit application, where it generates predictions based on user inputs such as departure location, destination, and travel date. The model outputs both the probability of delay and the expected delay duration, allowing users to make informed travel decisions.
 
 \subsection{Front-End (Streamlit)}
 
