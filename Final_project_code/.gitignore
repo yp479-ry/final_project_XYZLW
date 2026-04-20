@@ -1,0 +1,20 @@
+# macOS
+.DS_Store
+
+# Dataset files (too large for git)
+data/
+*.csv
+
+# Generated outputs (reproducible from notebook)
+outputs/
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+.ipynb_checkpoints/
+
+# Environment
+.env
+.venv/
+venv/
