@@ -1,0 +1,7 @@
+{
+  "random_forest_regressor": {
+    "rmse": 13.035940370529373,
+    "mean_actual_delay": 77.686175,
+    "mean_predicted_delay": 77.74244105871222
+  }
+}

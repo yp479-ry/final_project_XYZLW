@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
+import altair as alt
 import matplotlib.patches as mpatches
 import glob
 from sklearn.ensemble import RandomForestClassifier
@@ -20,24 +21,17 @@ DELAY_COLS = ["CARRIER_DELAY", "WEATHER_DELAY", "NAS_DELAY",
 DELAY_LABELS = ["Carrier", "Weather", "NAS", "Security", "Late Aircraft"]
 
 # ── Data loading (cached) ─────────────────────────────────────────────────────
-# ============================================================
-# TODO: Change this to your local folder containing the CSV files
-DATA_DIR = "/Users/linwu/Downloads"
-# ============================================================
-
 @st.cache_data
-def load_data(directory=DATA_DIR):
-    files = (glob.glob(f"{directory}/*ONTIME_REPORTING.csv") or
-             glob.glob(f"{directory}/*.csv"))
+def load_data(directory="Dataset"):
+    files = glob.glob(f"{directory}/*.csv")
     if not files:
         st.error(f"No CSV files found in '{directory}'.")
         st.stop()
     df = pd.concat([pd.read_csv(f) for f in files], ignore_index=True)
-    # Only drop rows missing core flight columns — keep on-time flights
-    df = df.dropna(subset=["DEP_DELAY", "DEP_DELAY_NEW", "DEP_DEL15"]).copy()
-    # Non-delayed flights have NaN in delay cause columns → fill with 0
+    clean_cols = ["DEP_DELAY", "DEP_DELAY_NEW", "DEP_DEL15"] + DELAY_COLS
+    df = df.dropna(subset=clean_cols).copy()
     for c in DELAY_COLS:
-        df[c] = df[c].fillna(0).clip(lower=0)
+        df[c] = df[c].clip(lower=0)
     return df
 
 # ── Model training (cached) ───────────────────────────────────────────────────
@@ -66,9 +60,12 @@ def compute_airline_metrics(df):
         LATE_AIRCRAFT_DELAY= ("LATE_AIRCRAFT_DELAY","mean"),
     ).reset_index()
     perf["Delay_Ratio (%)"] = perf["Delay_Ratio"] * 100
+    q1 = perf["Delay_Ratio (%)"].quantile(0.33)
+    q2 = perf["Delay_Ratio (%)"].quantile(0.66)
+
     perf["Reliability"] = perf["Delay_Ratio (%)"].apply(
-        lambda x: "⭐⭐⭐ Excellent" if x < 20
-                  else ("⭐⭐ Good" if x < 28 else "⭐ Poor")
+        lambda x: "⭐⭐⭐ Lower Risk" if x <= q1
+                else ("⭐⭐ Medium Risk" if x <= q2 else "⭐ Higher Risk")
     )
     return perf
 
@@ -92,9 +89,27 @@ month_names    = ["Jan","Feb","Mar","Apr","May","Jun",
 
 origin  = st.sidebar.selectbox("Departure City", origin_cities)
 dest    = st.sidebar.selectbox("Arrival City",   dest_cities)
-month   = st.sidebar.selectbox("Travel Month",   months,
-                                format_func=lambda m: month_names[m-1])
-predict_btn = st.sidebar.button("🔍 Predict & Compare", use_container_width=True)
+month   = st.sidebar.selectbox(
+    "Travel Month",
+    months,
+    format_func=lambda m: month_names[m-1]
+)
+
+risk_threshold = st.sidebar.slider(
+    "Delay Risk Threshold (%)",
+    min_value=10,
+    max_value=90,
+    value=50,
+    step=5,
+    help="Flights with predicted delay probability above this threshold will be marked as High Risk."
+)
+st.sidebar.caption(
+
+    "Lower threshold = more conservative. Higher threshold = more flexible."
+
+)
+
+predict_btn = st.sidebar.button("🔍 Predict & Compare", width="stretch")
 
 # ── Main page ─────────────────────────────────────────────────────────────────
 st.title("✈️ U.S. Flight Delay Prediction & Airline Recommendation")
@@ -141,74 +156,290 @@ if predict_btn:
         st.stop()
 
     results_df = pd.DataFrame(results).sort_values("Delay Probability (%)", ascending=True)
-
+    results_df["Risk Level"] = np.where(
+        results_df["Delay Probability (%)"] >= risk_threshold,
+        "High Risk",
+        "Acceptable Risk"
+    )
     # ── Best airline recommendation ───────────────────────────────────────────
-    best = results_df.iloc[0]
+    acceptable_df = results_df[results_df["Risk Level"] == "Acceptable Risk"]
+
+    if not acceptable_df.empty:
+        best = acceptable_df.iloc[0]
+    else:
+        best = results_df.iloc[0]
+        st.warning(
+            "All available airlines are above your selected risk threshold. "
+            "Showing the lowest-risk option instead."
+        )
+
     st.markdown("---")
-    st.subheader("🏆 Recommended Airline")
-    col1, col2, col3 = st.columns(3)
-    col1.metric("Airline",                best["Airline"])
-    col2.metric("Delay Probability",      f"{best['Delay Probability (%)']:.1f}%")
-    col3.metric("Expected Delay",         f"{best['Expected Delay (min)']:.1f} min")
+    st.subheader("🏆 Lowest-Risk Airline Option")
+
+    # Smaller unified metric cards
+    risk_color = "#2ecc71" if best["Risk Level"] == "Acceptable Risk" else "#ff4b4b"
+
+    metric_html = f"""
+    <div style="display:grid; grid-template-columns:repeat(4, 1fr); gap:18px; margin-top:10px;">
+
+    <div style="padding:18px 20px; border-radius:16px; background-color:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.10);">
+        <div style="font-size:15px; color:#A0A4AA; font-weight:600;">Airline</div>
+        <div style="font-size:28px; color:white; font-weight:700; margin-top:8px;">{best["Airline"]}</div>
+    </div>
+
+    <div style="padding:18px 20px; border-radius:16px; background-color:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.10);">
+        <div style="font-size:15px; color:#A0A4AA; font-weight:600;">Delay Probability</div>
+        <div style="font-size:28px; color:white; font-weight:700; margin-top:8px;">{best["Delay Probability (%)"]:.1f}%</div>
+    </div>
+
+    <div style="padding:18px 20px; border-radius:16px; background-color:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.10);">
+        <div style="font-size:15px; color:#A0A4AA; font-weight:600;">Expected Delay</div>
+        <div style="font-size:28px; color:white; font-weight:700; margin-top:8px;">{best["Expected Delay (min)"]:.1f} min</div>
+    </div>
+
+    <div style="padding:18px 20px; border-radius:16px; background-color:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.10);">
+        <div style="font-size:15px; color:#A0A4AA; font-weight:600;">Risk Level</div>
+        <div style="display:inline-block; font-size:18px; color:{risk_color}; font-weight:700; margin-top:10px; padding:5px 10px; border-radius:999px; background-color:{risk_color}22; border:1px solid {risk_color}; white-space:nowrap;">
+        {best["Risk Level"]}
+        </div>
+    </div>
+
+    </div>
+    """
+
+    st.markdown(metric_html, unsafe_allow_html=True)
 
     # ── Airline comparison table ──────────────────────────────────────────────
     st.markdown("---")
     st.subheader("📊 Airline Comparison")
-    display_df = results_df[["Airline", "Delay Probability (%)", "Expected Delay (min)"]].copy()
+    display_df = results_df[
+        ["Airline", "Delay Probability (%)", "Expected Delay (min)", "Risk Level"]
+    ].copy()
     display_df = display_df.merge(
         airline_metrics[["OP_UNIQUE_CARRIER", "Reliability"]],
         left_on="Airline", right_on="OP_UNIQUE_CARRIER", how="left"
     ).drop(columns="OP_UNIQUE_CARRIER")
-    st.dataframe(display_df.reset_index(drop=True), use_container_width=True)
+    st.dataframe(display_df.reset_index(drop=True), width="stretch")
 
-    # ── Bar chart comparison ───────────────────────────────────────────────────
+    # ── Airline comparison charts ───────────────────────────────────────────────
     st.markdown("---")
-    st.subheader("📈 Delay Probability & Expected Duration by Airline")
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 5))
+    st.subheader("📈 Delay Risk and Expected Delay by Airline")
 
-    colors = ["#2ecc71" if a == best["Airline"] else "#3498db"
-              for a in results_df["Airline"]]
-    ax1.barh(results_df["Airline"], results_df["Delay Probability (%)"], color=colors)
-    ax1.set_xlabel("Delay Probability (%)")
-    ax1.set_title("Delay Probability by Airline")
-    ax1.axvline(x=results_df["Delay Probability (%)"].mean(), color="red",
-                linestyle="--", label="Average")
-    ax1.legend()
+    chart_df = results_df.copy()
+    chart_df["Recommendation"] = np.where(
+        chart_df["Airline"] == best["Airline"],
+        "Recommended",
+        "Other"
+    )
 
-    ax2.barh(results_df["Airline"], results_df["Expected Delay (min)"], color=colors)
-    ax2.set_xlabel("Expected Delay (min)")
-    ax2.set_title("Expected Delay Duration by Airline")
+    chart_df["DelayProbability"] = chart_df["Delay Probability (%)"]
+    chart_df["ExpectedDelay"] = chart_df["Expected Delay (min)"]
 
-    green_patch = mpatches.Patch(color="#2ecc71", label="Recommended")
-    blue_patch  = mpatches.Patch(color="#3498db", label="Other")
-    fig.legend(handles=[green_patch, blue_patch], loc="lower center", ncol=2)
-    plt.tight_layout()
-    st.pyplot(fig)
+    threshold_df = pd.DataFrame({
+        "Risk Threshold": [risk_threshold]
+    })
 
-    # ── Delay cause donut chart ────────────────────────────────────────────────
+    left_col, right_col = st.columns(2)
+
+    with left_col:
+        st.markdown("#### Delay Probability")
+
+        prob_bars = alt.Chart(chart_df).mark_bar(
+            cornerRadiusEnd=6
+        ).encode(
+            y=alt.Y(
+                "Airline:N",
+                sort=alt.EncodingSortField(
+                    field="DelayProbability",
+                    order="ascending"
+                ),
+                title=None
+            ),
+            x=alt.X(
+                "DelayProbability:Q",
+                title="Delay Probability (%)",
+                scale=alt.Scale(domain=[0, 100])
+            ),
+            color=alt.Color(
+                "Recommendation:N",
+                scale=alt.Scale(
+                    domain=["Recommended", "Other"],
+                    range=["#2ecc71", "#4aa3df"]
+                ),
+                legend=alt.Legend(title=None)
+            ),
+            tooltip=[
+                alt.Tooltip("Airline:N", title="Airline"),
+                alt.Tooltip("DelayProbability:Q", title="Delay Probability (%)", format=".1f"),
+                alt.Tooltip("ExpectedDelay:Q", title="Expected Delay (min)", format=".1f"),
+                alt.Tooltip("Risk Level:N", title="Risk Level")
+            ]
+        ).properties(
+            height=360
+        )
+
+        threshold_line = alt.Chart(threshold_df).mark_rule(
+            color="#ff4b4b",
+            strokeDash=[6, 4],
+            size=2
+        ).encode(
+            x="Risk Threshold:Q"
+        )
+
+        threshold_label = alt.Chart(threshold_df).mark_text(
+            text=f"Threshold: {risk_threshold}%",
+            align="left",
+            dx=6,
+            dy=-8,
+            color="#ff4b4b",
+            fontSize=12
+        ).encode(
+            x="Risk Threshold:Q",
+            y=alt.value(10)
+        )
+
+        prob_chart = (prob_bars + threshold_line + threshold_label).configure_view(
+            strokeWidth=0
+        ).configure_axis(
+            labelFontSize=12,
+            titleFontSize=13
+        )
+
+        st.altair_chart(prob_chart, width="stretch")
+
+    with right_col:
+        st.markdown("#### Expected Delay Duration")
+
+        delay_chart = alt.Chart(chart_df).mark_bar(
+            cornerRadiusEnd=6
+        ).encode(
+            y=alt.Y(
+                "Airline:N",
+                sort=alt.EncodingSortField(
+                    field="ExpectedDelay",
+                    order="ascending"
+                ),
+                title=None
+            ),
+            x=alt.X(
+                "ExpectedDelay:Q",
+                title="Expected Delay (minutes)"
+            ),
+            color=alt.Color(
+                "Recommendation:N",
+                scale=alt.Scale(
+                    domain=["Recommended", "Other"],
+                    range=["#2ecc71", "#4aa3df"]
+                ),
+                legend=alt.Legend(title=None)
+            ),
+            tooltip=[
+                alt.Tooltip("Airline:N", title="Airline"),
+                alt.Tooltip("ExpectedDelay:Q", title="Expected Delay (min)", format=".1f"),
+                alt.Tooltip("DelayProbability:Q", title="Delay Probability (%)", format=".1f"),
+                alt.Tooltip("Risk Level:N", title="Risk Level")
+            ]
+        ).properties(
+            height=360
+        ).configure_view(
+            strokeWidth=0
+        ).configure_axis(
+            labelFontSize=12,
+            titleFontSize=13
+        )
+
+        st.altair_chart(delay_chart, width="stretch")
+
+    # ── Delay cause breakdown chart ─────────────────────────────────────────────
     st.markdown("---")
     st.subheader(f"🍩 Delay Cause Breakdown — {best['Airline']}")
-    cause_vals = [best.get(label, 0) for label in DELAY_LABELS]
-    cause_vals = [max(v, 0.01) for v in cause_vals]  # avoid zero-wedge rendering
 
-    fig2, ax = plt.subplots(figsize=(7, 7))
-    wedges, texts, autotexts = ax.pie(
-        cause_vals, labels=DELAY_LABELS,
-        autopct="%1.1f%%", startangle=90,
-        pctdistance=0.8,
-        wedgeprops=dict(width=0.5)
+    cause_vals = [best.get(label, 0) for label in DELAY_LABELS]
+
+    cause_df = pd.DataFrame({
+        "Cause": DELAY_LABELS,
+        "Average Delay Minutes": cause_vals
+    })
+
+    cause_df["Average Delay Minutes"] = cause_df["Average Delay Minutes"].clip(lower=0.01)
+    cause_df["Percent"] = (
+        cause_df["Average Delay Minutes"] /
+        cause_df["Average Delay Minutes"].sum() * 100
     )
-    ax.set_title(f"Avg Delay Cause — {best['Airline']} ({month_names[month-1]})")
-    st.pyplot(fig2)
+
+    donut_col, bar_col = st.columns([1, 1.25])
+
+    with donut_col:
+        st.markdown("#### Cause Share")
+
+        donut_chart = alt.Chart(cause_df).mark_arc(
+            innerRadius=70,
+            outerRadius=125
+        ).encode(
+            theta=alt.Theta("Average Delay Minutes:Q"),
+            color=alt.Color(
+                "Cause:N",
+                legend=alt.Legend(title="Delay Cause", orient="bottom")
+            ),
+            tooltip=[
+                alt.Tooltip("Cause:N", title="Cause"),
+                alt.Tooltip("Average Delay Minutes:Q", title="Avg Delay Minutes", format=".1f"),
+                alt.Tooltip("Percent:Q", title="Share (%)", format=".1f")
+            ]
+        ).properties(
+            height=330
+        ).configure_view(
+            strokeWidth=0
+        )
+
+        st.altair_chart(donut_chart, width="stretch")
+
+    with bar_col:
+        st.markdown("#### Average Minutes by Cause")
+
+        cause_bar = alt.Chart(cause_df).mark_bar(
+            cornerRadiusEnd=6
+        ).encode(
+            y=alt.Y(
+                "Cause:N",
+                sort=alt.EncodingSortField(
+                    field="Average Delay Minutes",
+                    order="descending"
+                ),
+                title=None
+            ),
+            x=alt.X(
+                "Average Delay Minutes:Q",
+                title="Average Delay Minutes"
+            ),
+            color=alt.Color(
+                "Cause:N",
+                legend=None
+            ),
+            tooltip=[
+                alt.Tooltip("Cause:N", title="Cause"),
+                alt.Tooltip("Average Delay Minutes:Q", title="Avg Delay Minutes", format=".1f"),
+                alt.Tooltip("Percent:Q", title="Share (%)", format=".1f")
+            ]
+        ).properties(
+            height=330
+        ).configure_view(
+            strokeWidth=0
+        ).configure_axis(
+            labelFontSize=12,
+            titleFontSize=13
+        )
+
+        st.altair_chart(cause_bar, width="stretch")
 
 else:
     st.info("👈 Fill in your trip details in the sidebar and click **Predict & Compare**.")
     st.markdown("### 📌 Overall Airline Delay Statistics")
     st.dataframe(
         airline_metrics[["OP_UNIQUE_CARRIER", "Delay_Ratio (%)",
-                         "Avg_Delay", "Reliability"]]
+                        "Avg_Delay", "Reliability"]]
         .rename(columns={"OP_UNIQUE_CARRIER": "Airline",
-                         "Avg_Delay": "Avg Delay (min)"})
+                        "Avg_Delay": "Avg Delay (min)"})
         .sort_values("Delay_Ratio (%)"),
-        use_container_width=True
+        width="stretch"
     )
