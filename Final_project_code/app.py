@@ -75,9 +75,8 @@ rfc, lr_model = train_models(df)
 airline_metrics = compute_airline_metrics(df)
 
 # ── Sidebar ───────────────────────────────────────────────────────────────────
-st.sidebar.image("https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/Airplane_silhouette.svg/120px-Airplane_silhouette.svg.png", width=80)
 st.sidebar.title("✈️ Flight Delay Predictor")
-st.sidebar.markdown("Powered by **Random Forest** + **Linear Regression**")
+st.sidebar.markdown("Powered by **ML Classification** + **Random Forest Regression**")
 st.sidebar.markdown("---")
 
 origin_cities  = sorted(df["ORIGIN_CITY_NAME"].dropna().unique())
