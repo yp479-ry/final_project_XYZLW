@@ -76,7 +76,7 @@ airline_metrics = compute_airline_metrics(df)
 
 # ── Sidebar ───────────────────────────────────────────────────────────────────
 st.sidebar.title("✈️ Flight Delay Predictor")
-st.sidebar.markdown("Powered by **ML Classification** + **Random Forest Regression**")
+st.sidebar.markdown("Powered by **Historical Data + ML Risk Models**")
 st.sidebar.markdown("---")
 
 origin_cities  = sorted(df["ORIGIN_CITY_NAME"].dropna().unique())
@@ -98,7 +98,7 @@ risk_threshold = st.sidebar.slider(
     "Delay Risk Threshold (%)",
     min_value=10,
     max_value=90,
-    value=50,
+    value=75,
     step=5,
     help="Flights with predicted delay probability above this threshold will be marked as High Risk."
 )
@@ -114,7 +114,7 @@ predict_btn = st.sidebar.button("🔍 Predict & Compare", width="stretch")
 st.title("✈️ U.S. Flight Delay Prediction & Airline Recommendation")
 st.markdown(
     "Enter your trip details on the left, then click **Predict & Compare** "
-    "to get real-time delay predictions and airline recommendations."
+    "to compare airline delay risk based on historical route and month patterns."
 )
 
 if predict_btn:
@@ -169,7 +169,7 @@ if predict_btn:
         best = results_df.iloc[0]
         st.warning(
             "All available airlines are above your selected risk threshold. "
-            "Showing the lowest-risk option instead."
+            "This is not a low-risk recommendation; it is the lowest-risk option among the available airlines."
         )
 
     st.markdown("---")
@@ -207,6 +207,36 @@ if predict_btn:
     """
 
     st.markdown(metric_html, unsafe_allow_html=True)
+    # ── Recommendation explanation ───────────────────────────────────────────────
+    cause_summary = pd.DataFrame({
+        "Cause": DELAY_LABELS,
+        "Average Delay Minutes": [best.get(label, 0) for label in DELAY_LABELS]
+    }).sort_values("Average Delay Minutes", ascending=False)
+
+    top_cause = cause_summary.iloc[0]["Cause"]
+    top_cause_value = cause_summary.iloc[0]["Average Delay Minutes"]
+
+    st.markdown(
+        f"""
+        <div style="margin-top:18px; padding:18px 22px; border-radius:16px; background-color:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.10);">
+            <div style="font-size:18px; font-weight:700; color:white; margin-bottom:8px;">
+                💡 Why this option?
+            </div>
+            <div style="font-size:15px; color:#C9CDD3; line-height:1.6;">
+                <b>{best["Airline"]}</b> has the lowest predicted delay probability among the available airlines
+                for the selected route and month. Its predicted delay probability is
+                <b>{best["Delay Probability (%)"]:.1f}%</b>, with an expected delay of
+                <b>{best["Expected Delay (min)"]:.1f} minutes</b>. The largest estimated delay contributor is
+                <b>{top_cause}</b> at about <b>{top_cause_value:.1f} minutes</b>.
+            </div>
+            <div style="margin-top:14px; padding-top:12px; border-top:1px solid rgba(255,255,255,0.10); font-size:13px; color:#9AA3B2;">
+                ⚙️ Model pipeline: historical route/month filtering → delay probability estimation → expected delay duration → airline risk comparison.
+            </div>
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
+    
 
     # ── Airline comparison table ──────────────────────────────────────────────
     st.markdown("---")
