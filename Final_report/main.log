@@ -1,10 +1,10 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.3.8)  6 MAY 2026 14:50
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.3.8)  7 MAY 2026 01:03
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
  %&-line parsing enabled.
-**"/Users/macbookpro/Desktop/final_project_XYZLW/Final Report/[PAML Spring 2026] Final Report Template/main.tex"
-(/Users/macbookpro/Desktop/final_project_XYZLW/Final Report/[PAML Spring 2026] Final Report Template/main.tex
+**/Users/macbookpro/Desktop/final_project_XYZLW/Final_report/main.tex
+(/Users/macbookpro/Desktop/final_project_XYZLW/Final_report/main.tex
 LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2025-01-18>
 (/usr/local/texlive/2025/texmf-dist/tex/latex/ieeetran/IEEEtran.cls
@@ -271,56 +271,250 @@ Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 48
  (/usr/local/texlive/2025/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Live
 ))
-LaTeX Font Info:    Trying to load font information for U+msa on input line 57.
+LaTeX Font Info:    Calculating math sizes for size <11> on input line 49.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 49.
  (/usr/local/texlive/2025/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 57.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 49.
  (/usr/local/texlive/2025/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
+) (./final_report_body.tex
+
+LaTeX Font Info:    Trying to load font information for TS1+ptm on input line 39.
+(/usr/local/texlive/2025/texmf-dist/tex/latex/psnfss/ts1ptm.fd
+File: ts1ptm.fd 2001/06/04 font definitions for TS1/ptm.
 )
-LaTeX Font Info:    Calculating math sizes for size <11> on input line 57.
- (./final_report_body.tex
-<Figures/robot_figure.png, id=1, 100.2144pt x 100.2144pt>
-File: Figures/robot_figure.png Graphic file (type png)
-<use Figures/robot_figure.png>
-Package pdftex.def Info: Figures/robot_figure.png  used on input line 48.
-(pdftex.def)             Requested size: 206.39685pt x 206.41948pt.
-
-
-LaTeX Warning: Citation `example_bibtex_label' on page 1 undefined on input line 58.
-
-
-
-<Figures/study_overview_figure.png, id=2, 873.2625pt x 296.10625pt>
-File: Figures/study_overview_figure.png Graphic file (type png)
-<use Figures/study_overview_figure.png>
-Package pdftex.def Info: Figures/study_overview_figure.png  used on input line 66.
-(pdftex.def)             Requested size: 258.0pt x 87.4816pt.
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
+Underfull \hbox (badness 2343) in paragraph at lines 39--40
+[]\OT1/ptm/m/n/10 Machine Learn-ing Pipeline: The data col-lec-tion, Ex-
+ []
 
 
 
 [1{/usr/local/texlive/2025/texmf-var/fonts/map/pdftex/updmap/pdftex.map}{/usr/local/texlive/2025/texmf-dist/fonts/enc/dvips/base/8r.enc}
 
 
- <./Figures/robot_figure.png> <./Figures/study_overview_figure.png>]
-./final_report_body.tex:77: Misplaced alignment tab character &.
-\@svsechd ...@svsec Data Collection, Exploration &
-                                                   Processing\@IEEEsectpunct...
-l.77 D
-      escribe the dataset(s) you plan to use for training machine learning m...
-I can't figure out why you would want to use a tab mark
-here. If you just want an ampersand, the remedy is
-simple: Just type `I\&' now. But if some right brace
-up above has ended a previous alignment prematurely,
-you're probably due for more error messages, and you
-might try typing `S' now just to see what is salvageable.
+]
+
+
+Underfull \hbox (badness 1803) in paragraph at lines 61--62
+\OT1/ptm/m/n/10 Statis-tics (BTS) TranStats Air-line On-Time Per-for-mance
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 61--62
+\OT1/ptm/m/n/10 ORI-GIN, ORI-GIN[]CITY[]NAME, ORI-GIN[]STATE[]NM,
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 61--62
+\OT1/ptm/m/n/10 DEST, DEST[]CITY[]NAME, DEST[]STATE[]NM),
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 61--62
+\OT1/ptm/m/n/10 nu-mer-i-cal fea-tures (DEP[]DELAY, DEP[]DELAY[]NEW,
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 61--62
+\OT1/ptm/m/n/10 AIR[]TIME, DIS-TANCE, CAR-RIER[]DELAY,
+ []
+
+
+Underfull \hbox (badness 5726) in paragraph at lines 61--62
+\OT1/ptm/m/n/10 WEATHER[]DELAY, NAS[]DELAY, SE-CU-RITY[]DELAY,
+ []
+
+
+Underfull \hbox (badness 1783) in paragraph at lines 65--66
+\OT1/ptm/m/n/10 CU-RITY[]DELAY, and LATE[]AIRCRAFT[]DELAY. Af-ter
+ []
 
 
 
+[2]
+LaTeX Font Info:    Trying to load font information for OT1+pcr on input line 67.
+ (/usr/local/texlive/2025/texmf-dist/tex/latex/psnfss/ot1pcr.fd
+File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
 )
+<Figures/target_distribution_dep_del15.png, id=13, 578.16pt x 361.35pt>
+File: Figures/target_distribution_dep_del15.png Graphic file (type png)
+<use Figures/target_distribution_dep_del15.png>
+Package pdftex.def Info: Figures/target_distribution_dep_del15.png  used on input line 71.
+(pdftex.def)             Requested size: 214.20154pt x 133.87384pt.
+<Figures/flight_counts_by_delay_group.png, id=15, 867.24pt x 361.35pt>
+File: Figures/flight_counts_by_delay_group.png Graphic file (type png)
+<use Figures/flight_counts_by_delay_group.png>
+Package pdftex.def Info: Figures/flight_counts_by_delay_group.png  used on input line 78.
+(pdftex.def)             Requested size: 226.79846pt x 94.49464pt.
+<Figures/delay_factor_pie_charts.png, id=16, 1156.32pt x 505.89pt>
+File: Figures/delay_factor_pie_charts.png Graphic file (type png)
+<use Figures/delay_factor_pie_charts.png>
+Package pdftex.def Info: Figures/delay_factor_pie_charts.png  used on input line 85.
+(pdftex.def)             Requested size: 252.0pt x 110.24632pt.
+<Figures/airline_delay_bar_charts.png, id=17, 1300.86pt x 433.62pt>
+File: Figures/airline_delay_bar_charts.png Graphic file (type png)
+<use Figures/airline_delay_bar_charts.png>
+Package pdftex.def Info: Figures/airline_delay_bar_charts.png  used on input line 92.
+(pdftex.def)             Requested size: 252.0pt x 83.99646pt.
+<Figures/short_vs_long_haul_delays.png, id=18, 867.24pt x 433.62pt>
+File: Figures/short_vs_long_haul_delays.png Graphic file (type png)
+<use Figures/short_vs_long_haul_delays.png>
+Package pdftex.def Info: Figures/short_vs_long_haul_delays.png  used on input line 99.
+(pdftex.def)             Requested size: 239.39923pt x 119.6991pt.
+<Figures/correlation_heatmap_delay_types.png, id=19, 722.7pt x 578.16pt>
+File: Figures/correlation_heatmap_delay_types.png Graphic file (type png)
+<use Figures/correlation_heatmap_delay_types.png>
+Package pdftex.def Info: Figures/correlation_heatmap_delay_types.png  used on input line 106.
+(pdftex.def)             Requested size: 214.20154pt x 171.35852pt.
+
+Underfull \hbox (badness 2119) in paragraph at lines 111--112
+[]\OT1/ptm/m/n/10 For pre-pro-cess-ing, we first han-dled miss-ing data by
+ []
+
+
+Underfull \hbox (badness 1668) in paragraph at lines 111--112
+\OT1/pcr/m/n/10 DEP_DEL15 \OT1/ptm/m/n/10 into an in-te-ger clas-si-fi-ca-tion la-bel. Delay-
+ []
+
+
+
+
+Underfull \hbox (badness 2828) in paragraph at lines 113--114
+[]\OT1/ptm/m/n/10 In the ma-chine learn-ing pipeline, nu-mer-i-cal fea-tures
+ []
+
+
+
+[3 <./Figures/target_distribution_dep_del15.png> <./Figures/flight_counts_by_delay_group.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 135--136
+[]\OT1/ptm/m/n/10 The clas-si-fi-ca-tion in-put fea-tures in-clude
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 135--136
+\OT1/pcr/m/n/10 MONTH\OT1/ptm/m/n/10 , \OT1/pcr/m/n/10 OP_UNIQUE_CARRIER\OT1/ptm/m/n/10 , \OT1/pcr/m/n/10 ORIGIN\OT1/ptm/m/n/10 , \OT1/pcr/m/n/10 DEST\OT1/ptm/m/n/10 ,
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 135--136
+\OT1/pcr/m/n/10 DISTANCE\OT1/ptm/m/n/10 , \OT1/pcr/m/n/10 AIR_TIME\OT1/ptm/m/n/10 , \OT1/pcr/m/n/10 CARRIER_DELAY\OT1/ptm/m/n/10 ,
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 135--136
+\OT1/pcr/m/n/10 WEATHER_DELAY\OT1/ptm/m/n/10 , \OT1/pcr/m/n/10 NAS_DELAY\OT1/ptm/m/n/10 , \OT1/pcr/m/n/10 SECURITY_DELAY\OT1/ptm/m/n/10 ,
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 135--136
+\OT1/ptm/m/n/10 and \OT1/pcr/m/n/10 LATE_AIRCRAFT_DELAY\OT1/ptm/m/n/10 . The re-gres-sion in-put
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 135--136
+\OT1/ptm/m/n/10 fea-tures in-clude \OT1/pcr/m/n/10 MONTH\OT1/ptm/m/n/10 , \OT1/pcr/m/n/10 DISTANCE\OT1/ptm/m/n/10 , \OT1/pcr/m/n/10 AIR_TIME\OT1/ptm/m/n/10 ,
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 135--136
+\OT1/pcr/m/n/10 CARRIER_DELAY\OT1/ptm/m/n/10 , \OT1/pcr/m/n/10 WEATHER_DELAY\OT1/ptm/m/n/10 , \OT1/pcr/m/n/10 NAS_DELAY\OT1/ptm/m/n/10 ,
+ []
+
+
+
+
+
+[4 <./Figures/delay_factor_pie_charts.png> <./Figures/airline_delay_bar_charts.png> <./Figures/short_vs_long_haul_delays.png> <./Figures/correlation_heatmap_delay_types.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 174--175
+[]\OT1/ptm/m/n/10 For clas-si-fi-ca-tion ex-per-i-ments, we trained Lo-gis-tic
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 174--175
+\OT1/ptm/m/n/10 Re-gres-sion, Ran-dom For-est, Gra-di-ent Boost-ing,
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 174--175
+\OT1/ptm/m/n/10 Ad-aBoost, and Ex-tra Trees. Lo-gis-tic Re-gres-sion
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 174--175
+\OT1/ptm/m/n/10 used max[]iter=1000 and class[]weight='balanced'.
+ []
+
+
+Underfull \hbox (badness 6477) in paragraph at lines 174--175
+\OT1/ptm/m/n/10 Ran-dom For-est used n[]estimators=150, max[]depth=16,
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 174--175
+\OT1/ptm/m/n/10 and min[]samples[]leaf=5. Gra-di-ent Boost-ing used
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 174--175
+\OT1/ptm/m/n/10 n[]estimators=100, learn-ing[]rate=0.1, and max[]depth=3.
+ []
+
+
+Underfull \hbox (badness 3746) in paragraph at lines 174--175
+\OT1/ptm/m/n/10 Ad-aBoost used n[]estimators=100 and learn-ing[]rate=0.1.
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 174--175
+\OT1/ptm/m/n/10 Ex-tra Trees used n[]estimators=150, max[]depth=16,
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 174--175
+\OT1/ptm/m/n/10 min[]samples[]leaf=5, and class[]weight='balanced'. For
+ []
+
+
+
+<Figures/frontend_home.png, id=42, 2830.575pt x 1365.1pt>
+File: Figures/frontend_home.png Graphic file (type png)
+<use Figures/frontend_home.png>
+Package pdftex.def Info: Figures/frontend_home.png  used on input line 234.
+(pdftex.def)             Requested size: 232.19843pt x 111.98058pt.
+
+
+[5]
+<Figures/frontend_results.png, id=48, 2190.1825pt x 1365.1pt>
+File: Figures/frontend_results.png Graphic file (type png)
+<use Figures/frontend_results.png>
+Package pdftex.def Info: Figures/frontend_results.png  used on input line 258.
+(pdftex.def)             Requested size: 232.19843pt x 144.7249pt.
+<Figures/frontend_airline_comparison.png, id=49, 2190.1825pt x 1082.0425pt>
+File: Figures/frontend_airline_comparison.png Graphic file (type png)
+<use Figures/frontend_airline_comparison.png>
+Package pdftex.def Info: Figures/frontend_airline_comparison.png  used on input line 264.
+(pdftex.def)             Requested size: 232.19843pt x 114.71576pt.
+
+
+<Figures/frontend_delay_chart.png, id=50, 2190.1825pt x 1082.0425pt>
+File: Figures/frontend_delay_chart.png Graphic file (type png)
+<use Figures/frontend_delay_chart.png>
+Package pdftex.def Info: Figures/frontend_delay_chart.png  used on input line 305.
+(pdftex.def)             Requested size: 232.19843pt x 114.71576pt.
+<Figures/frontend_delay_causes.png, id=51, 2190.1825pt x 1082.0425pt>
+File: Figures/frontend_delay_causes.png Graphic file (type png)
+<use Figures/frontend_delay_causes.png>
+Package pdftex.def Info: Figures/frontend_delay_causes.png  used on input line 311.
+(pdftex.def)             Requested size: 232.19843pt x 114.71576pt.
+
+
+[6 <./Figures/frontend_home.png (PNG copy)> <./Figures/frontend_results.png (PNG copy)> <./Figures/frontend_airline_comparison.png (PNG copy)>]
+
+(./main.bbl
+
+[7 <./Figures/frontend_delay_chart.png (PNG copy)> <./Figures/frontend_delay_causes.png (PNG copy)>]))
 
 ** Conference Paper **
 Before submitting the final camera ready copy, remember to:
@@ -334,32 +528,29 @@ Before submitting the final camera ready copy, remember to:
 
 
 
-[2] (./main.aux)
+
+
+[8
+
+] (./main.aux)
  ***********
 LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2025-01-18>
  ***********
-
-
-LaTeX Warning: There were undefined references.
-
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
-
  ) 
 Here is how much of TeX's memory you used:
- 4208 strings out of 473190
- 66324 string characters out of 5715801
- 471766 words of memory out of 5000000
- 27422 multiletter control sequences out of 15000+600000
- 599061 words of font info for 116 fonts, out of 8000000 for 9000
+ 4377 strings out of 473190
+ 70770 string characters out of 5715801
+ 479132 words of memory out of 5000000
+ 27576 multiletter control sequences out of 15000+600000
+ 604404 words of font info for 127 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 57i,11n,65p,635b,304s stack positions out of 10000i,1000n,20000p,200000b,200000s
-</usr/local/texlive/2025/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/urw/times/utmbi8a.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on main.pdf (2 pages, 163958 bytes).
+ 57i,11n,65p,2784b,334s stack positions out of 10000i,1000n,20000p,200000b,200000s
+</usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/urw/times/utmbi8a.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/local/texlive/2025/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
+Output written on main.pdf (8 pages, 1422636 bytes).
 PDF statistics:
- 36 PDF objects out of 1000 (max. 8388607)
- 20 compressed objects within 1 object stream
+ 130 PDF objects out of 1000 (max. 8388607)
+ 70 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
- 11 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 56 words of extra memory for PDF output out of 10000 (max. 10000000)
 
