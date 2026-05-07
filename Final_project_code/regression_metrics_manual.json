@@ -1,0 +1,8 @@
+{
+  "manual_linear_regression": {
+    "rmse": 17.179318593542472,
+    "r2": 0.9746165231931408,
+    "mean_actual_delay": 77.686175,
+    "mean_predicted_delay": 77.79768627287922
+  }
+}

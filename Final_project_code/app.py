@@ -6,7 +6,7 @@ import altair as alt
 import matplotlib.patches as mpatches
 import glob
 from sklearn.ensemble import RandomForestClassifier
-from sklearn.linear_model import LinearRegression
+# from sklearn.linear_model import LinearRegression
 from sklearn.model_selection import train_test_split
 
 # ── Page config ───────────────────────────────────────────────────────────────
@@ -16,9 +16,43 @@ st.set_page_config(
     layout="wide"
 )
 
+# Liner Helper
+
 DELAY_COLS = ["CARRIER_DELAY", "WEATHER_DELAY", "NAS_DELAY",
               "SECURITY_DELAY", "LATE_AIRCRAFT_DELAY"]
 DELAY_LABELS = ["Carrier", "Weather", "NAS", "Security", "Late Aircraft"]
+
+
+def add_intercept(X):
+    return np.column_stack([np.ones(X.shape[0]), X])
+
+
+def standardize_train_test(X_train, X_test):
+    mean = X_train.mean(axis=0)
+    std = X_train.std(axis=0)
+    std[std == 0] = 1
+
+    X_train_scaled = (X_train - mean) / std
+    X_test_scaled = (X_test - mean) / std
+
+    return X_train_scaled, X_test_scaled, mean, std
+
+
+def train_linear_regression_manual(X, y, learning_rate=0.01, epochs=1000):
+    X_b = add_intercept(X)
+    weights = np.zeros(X_b.shape[1])
+
+    for _ in range(epochs):
+        y_pred = X_b @ weights
+        gradient = (X_b.T @ (y_pred - y)) / len(y)
+        weights -= learning_rate * gradient
+
+    return weights
+
+
+def predict_linear_manual(X, weights):
+    X_b = add_intercept(X)
+    return X_b @ weights
 
 # ── Data loading (cached) ─────────────────────────────────────────────────────
 @st.cache_data
@@ -37,15 +71,34 @@ def load_data(directory="Dataset"):
 # ── Model training (cached) ───────────────────────────────────────────────────
 @st.cache_resource
 def train_models(df):
-    X = df[DELAY_COLS].fillna(0)
-    y_cls = df["DEP_DEL15"].astype(int)
-    y_reg = df["DEP_DELAY_NEW"]
-    X_tr, X_te, y_tr, y_te = train_test_split(X, y_cls, test_size=0.2, random_state=42)
-    rfc = RandomForestClassifier(n_estimators=100, max_depth=10,
-                                  random_state=42, n_jobs=-1)
+    X = df[DELAY_COLS].fillna(0).to_numpy(dtype=float)
+    y_cls = df["DEP_DEL15"].astype(int).to_numpy()
+    y_reg = df["DEP_DELAY_NEW"].to_numpy(dtype=float)
+
+    X_tr, X_te, y_tr, y_te = train_test_split(
+        X,
+        y_cls,
+        test_size=0.2,
+        random_state=42
+    )
+
+    rfc = RandomForestClassifier(
+        n_estimators=100,
+        max_depth=10,
+        random_state=42,
+        n_jobs=-1
+    )
     rfc.fit(X_tr, y_tr)
-    lr = LinearRegression().fit(X, y_reg)
-    return rfc, lr
+
+    X_scaled, _, train_mean, train_std = standardize_train_test(X, X)
+    lr_weights = train_linear_regression_manual(
+        X_scaled,
+        y_reg,
+        learning_rate=0.01,
+        epochs=1000
+    )
+
+    return rfc, lr_weights, train_mean, train_std
 
 # ── Airline metrics (cached) ──────────────────────────────────────────────────
 @st.cache_data
@@ -71,7 +124,7 @@ def compute_airline_metrics(df):
 
 # ── Load everything ───────────────────────────────────────────────────────────
 df = load_data()
-rfc, lr_model = train_models(df)
+rfc, lr_weights, lr_mean, lr_std = train_models(df)
 airline_metrics = compute_airline_metrics(df)
 
 # ── Sidebar ───────────────────────────────────────────────────────────────────
@@ -139,10 +192,15 @@ if predict_btn:
             carrier_df = df[df["OP_UNIQUE_CARRIER"] == carrier]
         if carrier_df.empty:
             continue
-        X_pred = carrier_df[DELAY_COLS].fillna(0)
-        delay_prob    = rfc.predict_proba(X_pred)[:, 1].mean()
-        expected_delay = lr_model.predict(X_pred).mean()
-        avg_causes    = X_pred.mean().tolist()
+        X_pred_df = carrier_df[DELAY_COLS].fillna(0)
+        X_pred = X_pred_df.to_numpy(dtype=float)
+
+        delay_prob = rfc.predict_proba(X_pred)[:, 1].mean()
+
+        X_pred_scaled = (X_pred - lr_mean) / lr_std
+        expected_delay = predict_linear_manual(X_pred_scaled, lr_weights).mean()
+
+        avg_causes = X_pred_df.mean().tolist()
         results.append({
             "Airline": carrier,
             "Delay Probability (%)": round(delay_prob * 100, 1),
