@@ -3,7 +3,6 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import altair as alt
-import matplotlib.patches as mpatches
 import glob
 from sklearn.ensemble import RandomForestClassifier
 # from sklearn.linear_model import LinearRegression
@@ -16,8 +15,7 @@ st.set_page_config(
     layout="wide"
 )
 
-# Liner Helper
-
+# Linear Regression Helper
 DELAY_COLS = ["CARRIER_DELAY", "WEATHER_DELAY", "NAS_DELAY",
               "SECURITY_DELAY", "LATE_AIRCRAFT_DELAY"]
 DELAY_LABELS = ["Carrier", "Weather", "NAS", "Security", "Late Aircraft"]
@@ -71,9 +69,15 @@ def load_data(directory="Dataset"):
 # ── Model training (cached) ───────────────────────────────────────────────────
 @st.cache_resource
 def train_models(df):
-    X = df[DELAY_COLS].fillna(0).to_numpy(dtype=float)
-    y_cls = df["DEP_DEL15"].astype(int).to_numpy()
-    y_reg = df["DEP_DELAY_NEW"].to_numpy(dtype=float)
+    # Sample data to improve app loading speed
+    if len(df) > 200000:
+        df_model = df.sample(n=200000, random_state=42)
+    else:
+        df_model = df.copy()
+
+    X = df_model[DELAY_COLS].fillna(0).to_numpy(dtype=float)
+    y_cls = df_model["DEP_DEL15"].astype(int).to_numpy()
+    y_reg = df_model["DEP_DELAY_NEW"].to_numpy(dtype=float)
 
     X_tr, X_te, y_tr, y_te = train_test_split(
         X,
