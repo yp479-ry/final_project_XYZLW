@@ -2,24 +2,14 @@
 % HRI 2022 Final Project Report 
 %%%%%%%
 
-%%%%%%%%%%%%%%%%%%%%
-% Abstract
-%%%%%%%%%%%%%%%%%%%%
-%%%%%
 % Section 1: Abstract
 %%%%%
 \section{Abstract}
-\begin{abstract}
 
 Flight delays are a common issue that affect both airline operations and passengers. The purpose of this work is to investigate airline flight delays by analyzing historical airline flight data using two types of machine learning techniques: classification, to predict whether a flight will be delayed, and regression, to estimate delay duration. The dataset used in this project is publicly available from the U.S. Bureau of Transportation Statistics (BTS). Model comparison metrics include accuracy, precision, recall, F1 score, ROC-AUC, and RMSE.
 
 The practical application of machine learning is evidenced by the example of an interactive application built using Streamlit. The app allows users to specify their trip parameters (departure city, destination city, month of travel, and delay risk threshold) to see how likely it is that an airline will be late on a particular route based on historical performance for that route and travel month. We compared a number of classification algorithms including logistic regression, random forest, gradient boosting, adaBoost, and extra trees; the gradient boosting algorithm provided the best overall accuracy of classification. For the regression problem, we created our own implementation of linear regression using NumPy and using the gradient descent method to estimate the duration of delays. Overall, this work demonstrates how machine learning can help transportation decision-makers in the real world by providing predictions of airlines, comparison of airlines, labeling of risks, and explanations of causes of delays in a user-friendly format.
 
-\end{abstract}
-
-\begin{IEEEkeywords}
-flight delay prediction, machine learning, classification, regression, airline risk comparison, Streamlit, decision support
-\end{IEEEkeywords}
 
 %%%%%
 % Section 2: Introduction
